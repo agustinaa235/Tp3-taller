@@ -4,6 +4,10 @@
 #include <string>
 #include <sstream>
 #include <exception>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <unistd.h>
 
 
 class SocketError : public std::exception{
@@ -20,14 +24,16 @@ class Socket{
     public:
             Socket();
             ~Socket();
+						void Shutdown(int formato);
             Socket(const Socket &socket) = delete;
-            //Socket& operador=(const Socket &copy) = delete;
             Socket(Socket&& socket);
+						Socket& operator=(Socket&& other);
             void bine_and_listen(const char* host, const char* service);
             Socket aceptar();
             void conectar(const char* host, const char* service);
             void enviar(const char* mensaje, const size_t& tamanio) const;
-            void recibir(char* mensaje, const size_t& tamanio) const;
+            int recibir(char* mensaje, const size_t& tamanio) const;
+						void cerrar();
 
 
     private:

@@ -1,10 +1,7 @@
 #define _POSIX_C_SOURCE 200112L
 #include "common_socket.h"
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <unistd.h>
+
 #include <cstring>
 #include <iostream>
 #define ERROR 1
@@ -29,7 +26,17 @@ Socket::Socket(){
 }
 Socket::~Socket(){
     if (this->file_descriptor != -1){
-        ::close(this->file_descriptor);
+        close(this->file_descriptor);
+    }
+}
+void Socket::Shutdown(int formato){
+    if (this->file_descriptor != -1){
+        shutdown(this->file_descriptor, formato);
+    }
+}
+void Socket::cerrar(){
+    if (this->file_descriptor !=-1){
+        close(this->file_descriptor);
     }
 }
 
@@ -43,7 +50,10 @@ Socket::Socket(int file_descriptor){
 
 
 Socket Socket::aceptar(){
-    int file_descriptor = ::accept(this->file_descriptor, nullptr, nullptr);
+    if (this->file_descriptor == -1){
+        throw SocketError("No esta habilitado el el socket listener");
+    }
+    int file_descriptor = accept(this->file_descriptor, nullptr, nullptr);
     if (file_descriptor == FALLA_SOCKET){
         throw SocketError("No se pudo crear el socket peer");
     }
@@ -55,6 +65,7 @@ void Socket::bine_and_listen(const char* host, const char* service){
     struct addrinfo hints;
     struct addrinfo *resultados, *aux;
     inicializar_struct_hints(&hints,AF_INET, SOCK_STREAM, AI_PASSIVE);
+
     if (getaddrinfo(host, service, &hints, &resultados) != EXITO_GET_ADD_INFO){
         throw SocketError("Falla de getaddrinfo");
     }
@@ -77,12 +88,25 @@ void Socket::bine_and_listen(const char* host, const char* service){
         aux = aux->ai_next;
     }
     freeaddrinfo(resultados);
+    int val = 1;
+    int s = setsockopt(this->file_descriptor, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+    if (s == -1) {
+      //printf("Error: %s\n", strerror(errno));
+      close(this->file_descriptor);
+      freeaddrinfo(aux);
+      return;
+    }
     if (listen(this->file_descriptor, ESCUCHA) == FALLA_SOCKET){
         throw SocketError("falla de listen");
     }
     if (no_pude_binear){
         throw SocketError("No se pudo binear");
     }
+}
+Socket& Socket::operator=(Socket&& other) {
+    this->file_descriptor = std::move(other.file_descriptor);
+    other.file_descriptor = -1;
+    return *this;
 }
 
 void Socket::conectar(const char* host, const char* service){
@@ -96,7 +120,7 @@ void Socket::conectar(const char* host, const char* service){
     aux = resultados;
     while (aux != NULL && no_pude_conectar){
         std::cout << "service: " << service << "\n";
-        int file_descriptor = ::socket(aux->ai_family, aux->ai_socktype,
+        int file_descriptor = socket(aux->ai_family, aux->ai_socktype,
                                       aux->ai_protocol);
         if (file_descriptor == FALLA_SOCKET){
             std::cout<< "falla del socket" << "\n";
@@ -121,9 +145,9 @@ void Socket::conectar(const char* host, const char* service){
     }
 }
 void Socket::enviar(const char* mensaje, const size_t& tamanio) const {
-    int bytes_enviados = 0;
+    size_t bytes_enviados = 0;
     while (bytes_enviados < tamanio) {
-        int verificacion = ::send(this->file_descriptor, &mensaje[bytes_enviados],
+        int verificacion = send(this->file_descriptor, &mensaje[bytes_enviados],
                               (tamanio - bytes_enviados), MSG_NOSIGNAL);
         if (verificacion > 0) {
             bytes_enviados += verificacion;
@@ -133,18 +157,9 @@ void Socket::enviar(const char* mensaje, const size_t& tamanio) const {
     }
 
 }
-void Socket::recibir(char* mensaje, const size_t& tamanio) const{
+int Socket::recibir(char* mensaje, const size_t& tamanio) const{
     int cant_recibidos = 0;
-    bool socket_cerrado = false;
-    while (!socket_cerrado && cant_recibidos < tamanio){
-      int verificacion = ::recv(this->file_descriptor,&mensaje[cant_recibidos],
-                              (tamanio - cant_recibidos -1), 0);
-      if (verificacion == 0){
-          socket_cerrado = true;
-      } else if(verificacion == -1){
-          throw SocketError("Error no se pudo recibir");
-      } else {
-          cant_recibidos += verificacion;
-      }
-    }
+    int verificacion = recv(this->file_descriptor, &mensaje[cant_recibidos],
+                              (tamanio - cant_recibidos), 0);
+    return verificacion;
 }

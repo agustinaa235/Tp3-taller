@@ -1,16 +1,24 @@
 #include "common_socket.h"
+#include "server.h"
 #include <iostream>
+#include <string>
 
 
-int main(){
+int main(int argc, char* argv[]){
+
   try{
-      Socket socket;
-      const char* host = "127.0.0.1";
-      const char* service = "7777";
-      socket.conectar(host, service);
-      socket.enviar("hola", 4);
+      std::string service(argv[1]);
+      std::string root_name(argv[2]);
+      Servidor servidor(service, root_name);
+      servidor.run();
+      char salir = 0;
+      do {
+            salir = getchar();
+      } while (salir != 'q');
+      servidor.close();
       return 0;
   }catch(const SocketError &exception){
       std::cout << ' ' << exception.getError();
+      return 0;
   }
 }
