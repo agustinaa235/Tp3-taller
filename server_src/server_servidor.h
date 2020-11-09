@@ -19,7 +19,6 @@ class Servidor{
           const char* service;
           Socket listener;
           Aceptador* aceptador;
-          //std::stringstream procesar_petitorio(Socket* peer);
 };
 
 #endif

@@ -29,16 +29,3 @@ std::string Servidor_Recursos::get_recurso(const std::string& recurso){
     body = it->second;
     return body;
 }
-/*
-Servidor_Recursos::Servidor_Recursos(Servidor_Recursos&& servidor_recursos){
-    this->root_template = servidor_recursos.root_template;
-    this->mapa_de_recursos = servidor_recursos.mapa_de_recursos;
-    this->mutex lock(servidor_recursos.mutex);
-}
-Servidor_Recursos& Servidor_Recursos::operator=(Servidor_Recursos&&
-                                                servidor_recursos){
-    this->root_template = servidor_recursos.root_template;
-    this->mapa_de_recursos = servidor_recursos.mapa_de_recursos;
-    this->mutex lock(servidor_recursos.mutex);
-    return *this;
-}*/

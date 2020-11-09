@@ -12,22 +12,7 @@ Servidor::Servidor(const std::string& service, const std::string& root_file) :
 Servidor::~Servidor(){
     delete this->aceptador;
 }
-/*
-Servidor::Servidor(Servidor&& servidor){
-    this->recursos = std::move(servidor.recursos);
-    this->service =  std::move(servidor.service);
-    this->listener = std::move(servidor.listener);
-    this->aceptador = std::move(servidor.aceptador);
-}
 
-Servidor& Servidor::operator=(Servidor&& servidor) {
-    this->recursos = std::move(servidor.recursos);
-    this->service = std::move(servidor.service);
-    this->listener = std::move(servidor.listener);
-    this->aceptador = std::move(servidor.aceptador);
-    return *this;
-}
-*/
 void Servidor::close(){
     this->listener.Shutdown(SHUT_RDWR);
     this->listener.cerrar();

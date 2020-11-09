@@ -41,8 +41,6 @@ Metodo* crear_metodo_get(const std::string& petitorio,
         std::string archivo = recursos->get_root_template();
         return new Get_Sin_Recurso(archivo);
     } else {
-          // verifico si mi recurso esta en mi petitorio y en base a eso se lo
-          // mando a mi get con recurso;
           std::string recurso = buscar_recurso(petitorio);
           std::string body = recursos->get_recurso(recurso);
           return new Get_Con_Recurso(body);
@@ -53,7 +51,6 @@ Metodo* crear_metodo_post(const std::string& petitorio,
     if (no_tiene_recurso(petitorio)){
         return new Post_Sin_Recurso();
     } else {
-        // agrego a mi mapa el resour con su mensaje;
         std::string recurso = buscar_recurso(petitorio);
         std::string body = buscar_body(petitorio);
         recursos->agregar_recurso(recurso, body);

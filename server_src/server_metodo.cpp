@@ -13,7 +13,6 @@ Get_Sin_Recurso::~Get_Sin_Recurso(){
     }
 }
 std::string Get_Sin_Recurso::obtener_respuesta(){
-  //std::cout << "estoy adentor de obtener respuesta";
     std::string respuesta = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n";
     std::string data;
     while (getline(this->archivo, data)){
