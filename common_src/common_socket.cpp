@@ -1,6 +1,6 @@
 #define _POSIX_C_SOURCE 200112L
 #include "common_socket.h"
-
+#include "../common_src/common_excepciones.h"
 
 #include <cstring>
 #include <iostream>
@@ -51,7 +51,7 @@ Socket::Socket(int file_descriptor){
 
 Socket Socket::aceptar(){
     if (this->file_descriptor == -1){
-        throw SocketError("No esta habilitado el el socket listener");
+        throw SocketError("No esta habilitado el  socket listener");
     }
     int file_descriptor = accept(this->file_descriptor, nullptr, nullptr);
     if (file_descriptor == FALLA_SOCKET){

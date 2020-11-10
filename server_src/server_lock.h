@@ -12,6 +12,7 @@ class Lock {
 								* liberara al lock con sus recursos
 							*/
 							~Lock();
+							
 			private:
 							std::mutex& mutex;
 };

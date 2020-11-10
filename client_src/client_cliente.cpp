@@ -30,6 +30,7 @@ void Cliente::procesar_respuesta_servidor(){
     std::string respuesta_aux = respuesta.str();
     std::cout << respuesta_aux;
 }
+
 void Cliente::run(){
     this->socket.conectar(this->host, this->service);
     std::string pepitorio;

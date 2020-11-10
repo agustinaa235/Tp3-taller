@@ -8,10 +8,24 @@
 #include <utility>
 class Aceptador : public Thread{
     public:
-        Aceptador();
-        Aceptador(Socket* listener, Servidor_Recursos* recursos);
-        ~Aceptador();
-        void run() override;
+          /*
+            * Creara al aceptador con sus argumentos en cero
+          */
+          Aceptador();
+          /*
+            *Creara al aceptador dejandolo valido para uso
+          */
+          Aceptador(Socket* listener, Servidor_Recursos* recursos);
+          /*
+            * Liberara al aceptador con sus recursos
+          */
+          ~Aceptador();
+          /*
+            * creara las distintas conexciones a clientes y las lanzara
+            * corta cuando se hace un shutdown del socket listener
+          */
+          void run() override;
+          
     private:
         Socket* listener;
         std::vector<Conexion_Cliente*> clientes;

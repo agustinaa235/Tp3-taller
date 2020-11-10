@@ -10,11 +10,28 @@
 
 class Conexion_Cliente: public Thread{
     public:
+          /*
+            * creara a la conexion de cada cliente con el peer
+          */
           Conexion_Cliente(Socket peer, Servidor_Recursos* recursos);
+          /*
+            * liberara la conexion cliente con sus respectivos recursos
+          */
           ~Conexion_Cliente();
+          /*
+            * se encarga de recibir la informacion del cliente, procesarla
+            * y devolvera ya procesada
+          */
           void run() override;
-          bool esta_muerto();
+          /*
+            * se fija si el hilo ya termino
+          */
+          bool esta_muerto() const;
+          /*
+            * hace que el hilo frene y no se ejecute mas
+          */
           void stop();
+
     private:
           Socket peer;
           Servidor_Recursos* recursos;

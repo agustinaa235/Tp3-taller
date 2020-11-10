@@ -64,7 +64,7 @@ Metodo* crear_metodo_invalido(std::string& petitorio){
 }
 
 Metodo* Parceador::parcear_petitorio(std::stringstream& petitorio,
-                                      Servidor_Recursos* recursos){
+                                      Servidor_Recursos* recursos) const {
     std::string petitorio_aux = petitorio.str();
     if (soy_get(petitorio_aux)){
         return crear_metodo_get(petitorio_aux, recursos);
@@ -74,7 +74,18 @@ Metodo* Parceador::parcear_petitorio(std::stringstream& petitorio,
         return crear_metodo_invalido(petitorio_aux);
     }
 }
+/*
 std::string Parceador::primera_linea(std::stringstream& petitorio){
+    std::string petitorio_aux = petitorio.str();
+    int pos = petitorio_aux.find("\n");
+    std::string primera_linea("");
+    if (pos == -1){
+        return primera_linea;
+    }
+    primera_linea = petitorio_aux.substr(0, pos);
+    return primera_linea;
+}*/
+std::string Parceador::operator()(std::stringstream&petitorio) const {
     std::string petitorio_aux = petitorio.str();
     int pos = petitorio_aux.find("\n");
     std::string primera_linea("");

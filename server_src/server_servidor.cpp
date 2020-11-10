@@ -1,7 +1,6 @@
 #include "server_servidor.h"
 #include <iostream>
-//#include "server_metodo.h"
-//#include "parceador.h"
+
 
 Servidor::Servidor(const std::string& service, const std::string& root_file) :
     recursos(root_file),

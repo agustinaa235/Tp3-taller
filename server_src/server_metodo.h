@@ -5,11 +5,11 @@
 #include <fstream>
 
 class Metodo{
-    public:
+    public:        
           virtual std::string obtener_respuesta() = 0;
           virtual ~Metodo(){}
 };
-
+/*
 class Get_Con_Recurso: public Metodo {
     public:
           explicit Get_Con_Recurso(const std::string& body);
@@ -51,5 +51,5 @@ class Invalida: public Metodo {
     private:
           std::string instruccion_invalida;
 };
-
+*/
 #endif

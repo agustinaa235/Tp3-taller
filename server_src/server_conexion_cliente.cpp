@@ -14,7 +14,7 @@ Conexion_Cliente::~Conexion_Cliente(){
     this->peer.Shutdown(SHUT_RDWR);
     this->peer.cerrar();
 }
-bool Conexion_Cliente::esta_muerto(){
+bool Conexion_Cliente::esta_muerto() const{
     return (this->esta_corriendo == false);
 }
 std::stringstream Conexion_Cliente::procesar_petitorio(){
@@ -46,10 +46,10 @@ void Conexion_Cliente::run(){
       while (this->seguir_hablando){
           std::stringstream petitorio = this->procesar_petitorio();
           Parceador parceador;
-          std::string primera_linea = parceador.primera_linea(petitorio);
+          std::string primera_linea = parceador(petitorio);
           std::cout << primera_linea << "\n";
           Metodo* metodo = parceador.parcear_petitorio(petitorio,
-                                                        this->recursos);
+                                                       this->recursos);
           std::string mensaje = metodo->obtener_respuesta();
           delete metodo;
           this->peer.enviar(mensaje.c_str(), mensaje.size());

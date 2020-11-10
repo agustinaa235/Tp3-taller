@@ -15,7 +15,7 @@ void Servidor_Recursos::agregar_recurso(const std::string& recurso,
       this->mapa_de_recursos.insert(make_pair(recurso, body));
 }
 
-std::string Servidor_Recursos::get_root_template(){
+std::string Servidor_Recursos::get_root_template()const{
     return this->root_template;
 }
 std::string Servidor_Recursos::get_recurso(const std::string& recurso){
