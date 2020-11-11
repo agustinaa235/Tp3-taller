@@ -4,7 +4,7 @@
 #include "server_parceador.h"
 #define TAMANIO_MENSAJE 100
 
-Conexion_Cliente::Conexion_Cliente(Socket peer, Servidor_Recursos* recursos) :
+Conexion_Cliente::Conexion_Cliente(Socket peer, Servidor_Recursos& recursos) :
       peer(std::move(peer)),
       recursos(recursos),
       seguir_hablando(true),
@@ -33,12 +33,13 @@ std::stringstream Conexion_Cliente::procesar_petitorio(){
             petitorio.write(buffer, cant_recibidos);
         }
     }
+    this->peer.Shutdown(SHUT_RD);
     return petitorio;
 }
 
 void Conexion_Cliente::stop(){
     this->seguir_hablando = false;
-    this->peer.Shutdown(SHUT_RDWR);
+    this->peer.Shutdown(SHUT_WR);
     this->peer.cerrar();
 }
 
@@ -54,7 +55,8 @@ void Conexion_Cliente::run(){
           delete metodo;
           this->peer.enviar(mensaje.c_str(), mensaje.size());
           this->seguir_hablando = false;
-          this->peer.Shutdown(SHUT_RDWR);
       }
+      this->peer.Shutdown(SHUT_WR);
+      this->peer.cerrar();
       this->esta_corriendo = false;
 }

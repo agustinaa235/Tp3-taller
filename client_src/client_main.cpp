@@ -23,5 +23,10 @@ int main(int argc, char* argv[]){
     }catch(const ArchivoError &exception){
         std::cout << ' ' << exception.get_error();
         return 0;
+    }catch(const std::exception& exception){
+          std::cout << ' ' << exception.what();
+          return 0;
+    }catch(...){
+          std::cout << "error desconocido";
     }
 }

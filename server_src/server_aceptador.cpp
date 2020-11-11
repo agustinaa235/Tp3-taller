@@ -2,8 +2,8 @@
 #include "../common_src/common_excepciones.h"
 #include <iostream>
 
-Aceptador::Aceptador(Socket* listener, Servidor_Recursos* recursos):
-      listener(std::move(listener)),
+Aceptador::Aceptador(Socket& listener, Servidor_Recursos& recursos):
+      listener(listener),
       clientes(),
       recursos(recursos){}
 
@@ -34,7 +34,7 @@ void Aceptador::run(){
     bool no_termine = false;
     while (!no_termine){
         try{
-            Socket peer = this->listener->aceptar();
+            Socket peer = this->listener.aceptar();
             this->clientes.push_back(new Conexion_Cliente(std::move(peer),
                                       this->recursos));
             this->clientes.back()->start();

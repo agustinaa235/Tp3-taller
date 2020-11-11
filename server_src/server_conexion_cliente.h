@@ -13,7 +13,7 @@ class Conexion_Cliente: public Thread{
           /*
             * creara a la conexion de cada cliente con el peer
           */
-          Conexion_Cliente(Socket peer, Servidor_Recursos* recursos);
+          Conexion_Cliente(Socket peer, Servidor_Recursos& recursos);
           /*
             * liberara la conexion cliente con sus respectivos recursos
           */
@@ -34,7 +34,7 @@ class Conexion_Cliente: public Thread{
 
     private:
           Socket peer;
-          Servidor_Recursos* recursos;
+          Servidor_Recursos& recursos;
           std::atomic<bool> seguir_hablando;
           std::atomic<bool> esta_corriendo;
           std::stringstream procesar_petitorio();

@@ -26,7 +26,6 @@ void Cliente::procesar_respuesta_servidor(){
             respuesta.write(buffer, bytes_recibidos);
         }
     }
-    this->socket.Shutdown(SHUT_RD);
     std::string respuesta_aux = respuesta.str();
     std::cout << respuesta_aux;
 }

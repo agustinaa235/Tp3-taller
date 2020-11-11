@@ -15,7 +15,7 @@ class Aceptador : public Thread{
           /*
             *Creara al aceptador dejandolo valido para uso
           */
-          Aceptador(Socket* listener, Servidor_Recursos* recursos);
+          Aceptador(Socket& listener, Servidor_Recursos& recursos);
           /*
             * Liberara al aceptador con sus recursos
           */
@@ -25,11 +25,11 @@ class Aceptador : public Thread{
             * corta cuando se hace un shutdown del socket listener
           */
           void run() override;
-          
+
     private:
-        Socket* listener;
+        Socket& listener;
         std::vector<Conexion_Cliente*> clientes;
-        Servidor_Recursos* recursos;
+        Servidor_Recursos& recursos;
         void sacar_terminados();
         void sacar_todos();
 };

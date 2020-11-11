@@ -23,11 +23,10 @@ class Parceador{
             * el correspondiente metodo
           */
           Metodo* parcear_petitorio(std::stringstream& petitorio,
-                                    Servidor_Recursos* recursos) const;
+                                    Servidor_Recursos& recursos) const;
           /*
             * devuelve la primera linea del parceo
           */
-          //std::string primera_linea(std::stringstream& petitorio);
           std::string operator()(std::stringstream& petitorio) const;
 };
 

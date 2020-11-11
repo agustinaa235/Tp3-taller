@@ -19,6 +19,6 @@ void Servidor::close(){
 }
 void Servidor::run(){
     this->listener.bine_and_listen(nullptr, this->service);
-    this->aceptador = new Aceptador(&this->listener,&this->recursos);
+    this->aceptador = new Aceptador(this->listener,this->recursos);
     this->aceptador->start();
 }

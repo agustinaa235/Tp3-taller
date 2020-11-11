@@ -3,24 +3,12 @@
 
 #include <string>
 #include <sstream>
-//#include <exception>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
 #include <utility>
 
-/*
-class SocketError : public std::exception{
-			public:
-					explicit SocketError(const std::string& error){
-							this->error = error;
-					}
-					const char* getError() const { return this->error.c_str(); }
-
-			private:
-					std::string error;
-};*/
 
 class Socket{
     public:

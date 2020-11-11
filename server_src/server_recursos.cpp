@@ -4,8 +4,7 @@
 
 Servidor_Recursos::Servidor_Recursos(const std::string& root_template) :
     mapa_de_recursos(),
-    root_template(root_template),
-    mutex(){}
+    root_template(root_template){}
 
 Servidor_Recursos::~Servidor_Recursos(){}
 
