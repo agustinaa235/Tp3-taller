@@ -13,7 +13,7 @@
 
 
 
-void inicializar_struct_hints(struct addrinfo* hints, int ai_family,
+static void inicializar_struct_hints(struct addrinfo* hints, int ai_family,
                               int ai_socktype, int ai_flags){
       memset(hints, 0, sizeof(struct addrinfo));
       hints->ai_family = ai_family;

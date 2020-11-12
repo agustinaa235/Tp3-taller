@@ -2,7 +2,7 @@
 #include "../common_src/common_excepciones.h"
 #include <iostream>
 
-Get_Sin_Recurso::Get_Sin_Recurso(std::string& nombre_archivo){
+Get_Sin_Recurso::Get_Sin_Recurso(const std::string& nombre_archivo){
     this->archivo.open(nombre_archivo);
     if (!this->archivo.is_open()){
       throw ArchivoError("ERROR_ARCHIVO");

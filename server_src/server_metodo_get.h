@@ -19,7 +19,7 @@ class Get_Con_Recurso: public Metodo {
             * devolvera la respuesta correspondiente
           */
            std::string obtener_respuesta() override;
-           
+
     private:
           std::string body;
 };
@@ -29,7 +29,7 @@ class Get_Sin_Recurso: public Metodo {
           /*
             * creara la clase get sin recurso dejandola valida para uso
           */
-          explicit Get_Sin_Recurso(std::string& nombre_archivo);
+          explicit Get_Sin_Recurso(const std::string& nombre_archivo);
           /*
             * liberara la clase get sin recurso
           */

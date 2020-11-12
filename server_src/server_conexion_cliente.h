@@ -37,6 +37,10 @@ class Conexion_Cliente: public Thread{
           Servidor_Recursos& recursos;
           std::atomic<bool> seguir_hablando;
           std::atomic<bool> esta_corriendo;
+          /*
+            * procesara el petitorio encargandose de recibir lo que manda
+            * el cliente
+          */  
           std::stringstream procesar_petitorio();
 };
 

@@ -12,14 +12,14 @@ Parceador::~Parceador(){}
 /*
   * devuleve true si el petitorio posee get sino devuelve false
 */
-static bool soy_get(std::string& petitorio){
+static bool soy_get(const std::string& petitorio){
     int pos = petitorio.find(GET);
     return (pos >-1? true:false);
 }
 /*
   * devuelve true si el petitorio posee un post sino devuelve false
 */
-static bool soy_post(std::string& petitorio){
+static bool soy_post(const std::string& petitorio){
     int pos = petitorio.find(POST);
     return (pos > -1? true:false);
 }
@@ -27,7 +27,7 @@ static bool soy_post(std::string& petitorio){
   * devulve true si determina que el petitorio no posee un recurso
   * sino devulve false
 */
-static bool no_tiene_recurso(std::string petitorio){
+static bool no_tiene_recurso(const std::string& petitorio){
     int pos = petitorio.find(SIN_RECURSO);
     return (pos > -1 ? true:false);
 }
@@ -35,7 +35,7 @@ static bool no_tiene_recurso(std::string petitorio){
   * buscara en el petitorio el recurso y lo devolvera
   * se asume que el petitorio viene con un correcto formato
 */
-static std::string buscar_recurso(std::string petitorio){
+static std::string buscar_recurso(const std::string& petitorio){
     int pos = petitorio.find("/");
     int pos2 = petitorio.find("HTTP");
     std::string recurso = petitorio.substr(pos, pos2);
@@ -45,7 +45,7 @@ static std::string buscar_recurso(std::string petitorio){
   * buscara en el petitorio el body y lo devulvera. si no lo encuentra
   * devulve el string vacio.
 */
-static std::string buscar_body(std::string petitorio){
+static std::string buscar_body(const std::string& petitorio){
     int pos = petitorio.find(BODY);
     std::string body("");
     if (pos == -1){
@@ -59,7 +59,7 @@ static std::string buscar_body(std::string petitorio){
   * uno o el otro
 */
 static Metodo* crear_metodo_get(const std::string& petitorio,
-                          Servidor_Recursos& recursos){
+                                Servidor_Recursos& recursos){
     if (no_tiene_recurso(petitorio)){
         std::string archivo = recursos.get_root_template();
         return new Get_Sin_Recurso(archivo);
@@ -84,8 +84,8 @@ static Metodo* crear_metodo_post(const std::string& petitorio,
 }
 /*
   * creara el metodo invalia
-*/  
-static Metodo* crear_metodo_invalido(std::string& petitorio){
+*/
+static Metodo* crear_metodo_invalido(const std::string& petitorio){
     int pos = petitorio.find("/");
     std::string instruccion_invalida = petitorio.substr(0, pos);
     return new Invalida(instruccion_invalida);
@@ -93,7 +93,7 @@ static Metodo* crear_metodo_invalido(std::string& petitorio){
 
 Metodo* Parceador::parcear_petitorio(std::stringstream& petitorio,
                                       Servidor_Recursos& recursos) const {
-    std::string petitorio_aux = petitorio.str();
+    const std::string petitorio_aux = petitorio.str();
     if (soy_get(petitorio_aux)){
         return crear_metodo_get(petitorio_aux, recursos);
     } else if (soy_post(petitorio_aux)){

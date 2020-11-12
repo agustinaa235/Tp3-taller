@@ -29,7 +29,17 @@ class Socket{
 							* no se permitira el uso del constructor por copia
 						*/
             Socket(const Socket &socket) = delete;
+            /*
+              * no se permitira el uso del operador = por copia
+            */
+            Socket& operator=(const Socket& socket) = delete;   
+            /*
+              * contructor por movimiento
+            */
             Socket(Socket&& socket);
+            /*
+              * operador = por movimiento
+            */
 						Socket& operator=(Socket&& socket);
 						/*
 							* realizara un bine y luego un listen
