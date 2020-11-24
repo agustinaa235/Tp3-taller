@@ -9,12 +9,12 @@ std::string Post_Sin_Recurso::obtener_respuesta(){
     return respuesta;
 }
 
-Post_Con_Recurso::Post_Con_Recurso(const std::string& body){
-    this->body = body;
+Post_Con_Recurso::Post_Con_Recurso(const std::string& cuerpo){
+    this->cuerpo = cuerpo;
 }
 Post_Con_Recurso::~Post_Con_Recurso(){}
 
 std::string Post_Con_Recurso::obtener_respuesta(){
-    std::string respuesta = "HTTP/1.1 200 OK\n\n" + this->body;
+    std::string respuesta = "HTTP/1.1 200 OK\n\n" + this->cuerpo;
     return respuesta;
 }

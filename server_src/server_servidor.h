@@ -11,7 +11,8 @@ class Servidor{
           /*
             * creara al servidor dejandolo valido para uso
           */
-          Servidor(const std::string& service, const std::string& root_file);
+          Servidor(const std::string& service,
+                   const std::string& nombre_archivo);
           /*
             * liberara al servidor junto a sus recursos
           */
@@ -32,12 +33,12 @@ class Servidor{
             * operador= por movimiento
           */
           Servidor& operator=(Servidor&& servidor);
-          
+
     private:
           Servidor_Recursos recursos;
           const char* service;
           Socket listener;
-          Aceptador* aceptador;
+          Aceptador aceptador;
 };
 
 #endif

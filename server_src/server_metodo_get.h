@@ -10,7 +10,7 @@ class Get_Con_Recurso: public Metodo {
           /*
             * creara la clase get con recurso dejandola valida para uso
           */
-          explicit Get_Con_Recurso(const std::string& body);
+          explicit Get_Con_Recurso(const std::string& cuerpo);
           /*
             * liberara la clase get con recurso con sus recursos
           */
@@ -21,7 +21,7 @@ class Get_Con_Recurso: public Metodo {
            std::string obtener_respuesta() override;
 
     private:
-          std::string body;
+          std::string cuerpo;
 };
 
 class Get_Sin_Recurso: public Metodo {

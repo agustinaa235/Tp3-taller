@@ -48,7 +48,6 @@ Socket::Socket(int file_descriptor){
     this->file_descriptor = file_descriptor;
 }
 
-
 Socket Socket::aceptar(){
     if (this->file_descriptor == -1){
         throw SocketError("No esta habilitado el  socket listener");
@@ -57,7 +56,7 @@ Socket Socket::aceptar(){
     if (file_descriptor == FALLA_SOCKET){
         throw SocketError("No se pudo crear el socket peer");
     }
-    return std::move(Socket(file_descriptor));
+    return Socket(file_descriptor);
 }
 
 void Socket::bine_and_listen(const char* host, const char* service){
@@ -104,6 +103,9 @@ void Socket::bine_and_listen(const char* host, const char* service){
     }
 }
 Socket& Socket::operator=(Socket&& other) {
+    if (this == &other){
+        return *this;
+    }
     this->file_descriptor = std::move(other.file_descriptor);
     other.file_descriptor = -1;
     return *this;
@@ -142,19 +144,32 @@ void Socket::conectar(const char* host, const char* service){
 }
 void Socket::enviar(const char* mensaje, const size_t& tamanio) const {
     size_t bytes_enviados = 0;
-    while (bytes_enviados < tamanio) {
+    bool termine = false;
+    while (bytes_enviados < tamanio && !termine) {
         int verificacion = send(this->file_descriptor, &mensaje[bytes_enviados],
                               (tamanio - bytes_enviados), MSG_NOSIGNAL);
         if (verificacion > 0) {
             bytes_enviados += verificacion;
+        } else if (verificacion == 0){
+            termine = true;
         } else {
             throw SocketError("no se pudo enviar el mensaje");
         }
     }
 }
 int Socket::recibir(char* mensaje, const size_t& tamanio) const{
-    int cant_recibidos = 0;
-    int verificacion = recv(this->file_descriptor, &mensaje[cant_recibidos],
+    size_t cant_recibidos = 0;
+    bool termine = false;
+    while (cant_recibidos < tamanio && !termine){
+        int verificacion = recv(this->file_descriptor, &mensaje[cant_recibidos],
                               (tamanio - cant_recibidos), 0);
-    return verificacion;
+        if (verificacion < 0){
+            throw SocketError("error al recibir el mensaje");
+        } else if (verificacion == 0){
+            termine = true;
+        } else {
+          cant_recibidos += verificacion;
+        }
+    }
+    return cant_recibidos;
 }

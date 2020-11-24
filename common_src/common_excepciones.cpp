@@ -5,16 +5,16 @@ SocketError::SocketError(const std::string& error){
 }
 SocketError::~SocketError(){}
 
-std::string SocketError::get_error() const {
-    return this->error;
+const char* SocketError::what() const noexcept {
+    return this->error.c_str();
 }
 
-ArchivoError::ArchivoError(const std::string& error){
+Exception::Exception(const std::string& error){
     this->error = error;
 }
 
-ArchivoError::~ArchivoError(){}
+Exception::~Exception(){}
 
-std::string ArchivoError::get_error() const {
-    return this->error;
+const char* Exception::what() const noexcept {
+    return this->error.c_str();
 }

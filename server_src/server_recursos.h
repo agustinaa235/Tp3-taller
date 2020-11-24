@@ -11,7 +11,7 @@ class Servidor_Recursos{
         /*
           * creara al servidor de recursos dejandolo valido para uso
         */
-        explicit Servidor_Recursos(const std::string& root_template);
+        explicit Servidor_Recursos(const std::string& nombre_archivo);
         /*
           * liberara el servidor de recursos junto a sus recursos
         */
@@ -20,19 +20,19 @@ class Servidor_Recursos{
           * agregara el recurso que le llega al mapa junto a su body
         */
         void agregar_recurso(const std::string& recurso,
-                              const std::string& body);
+                              const std::string& cuerpo);
         /*
-          * devuelve el nombre del archivo root template
+          * devuelve el nombre del archivo
         */
-        std::string get_root_template() const;
+        std::string obtener_nombre_archivo() const;
         /*
           * devuelve el el body del recurso asociado
         */
-        std::string get_recurso(const std::string& recurso);
+        std::string obtener_recurso(const std::string& recurso);
 
     private:
         std::map<std::string, std::string> mapa_de_recursos;
-        std::string root_template;
+        std::string nombre_archivo;
         std::mutex mutex;
 };
 

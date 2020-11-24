@@ -40,8 +40,12 @@ void Aceptador::run(){
             this->clientes.back()->start();
             sacar_terminados();
       }catch(const SocketError &exception){
-            this->sacar_todos();
-            no_termine = true;
+          no_termine = true;
+      } catch (const std::exception &exception){
+            std::cerr << exception.what();
+      } catch (...){
+            std::cerr << "error desconocido en el hilo aceptador";
       }
     }
+    this->sacar_todos();
 }

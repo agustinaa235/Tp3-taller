@@ -103,3 +103,23 @@
    ![digrama relacion metodos](https://github.com/agustinaa235/tp3/blob/main/relacion_metodos.png)
    ![digrama relacion sockets](https://github.com/agustinaa235/tp3/blob/main/relacion_socket.png)
    ![digrama relacion herencia threads](https://github.com/agustinaa235/tp3/blob/main/herencia_thread.png)
+
+# Segunda entrega
+
+* se mejoro el uso de excepciones teniendo en los mains principales teniendo
+  el catch de  std::exception y de las elipsis.
+
+* SE proferio a los hilos aceptadr y conexion clientes con excepciones, agregandole
+  sus correspondiente catchs.
+
+* se quito la race condition que se generaba por el uso sobre de << en el hilo
+conexion clientes.
+
+* se modifico la logica de recibir del socket y de recibir petitorio en
+  la clase conexion clientes.
+
+* tambien se creo una clase generica Exception  y tanto en esta clase como
+  en socketError se sobreesribe el metodo what.
+
+* se agrego el uso de la libreria std::lock_guard y se quito la clase Lock
+  implementada por el alumno. 

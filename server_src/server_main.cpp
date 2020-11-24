@@ -7,11 +7,10 @@
 #define ERROR_CANT_ARGUMENTOS " cantidad de argumentos invalida. Debe ser 3"
 
 int main(int argc, char* argv[]){
-    if (argc != CANTIDAD_ARGUMENTOS){
-        std::cout << ERROR_CANT_ARGUMENTOS;
-        return 0;
-    }
     try{
+        if (argc != CANTIDAD_ARGUMENTOS){
+            throw Exception(ERROR_CANT_ARGUMENTOS);
+        }
         std::string service(argv[1]);
         std::string root_name(argv[2]);
         Servidor servidor(service, root_name);
@@ -22,16 +21,11 @@ int main(int argc, char* argv[]){
         } while (salir != 'q');
         servidor.close();
         return 0;
-        }catch(const SocketError &exception){
-            std::cout << ' ' << exception.get_error();
-            return 0;
-        }catch(const ArchivoError &exception){
-            std::cout << ' ' << exception.get_error();
-            return 0;
         }catch(const std::exception& exception){
-              std::cout << ' ' << exception.what();
+              std::cerr << exception.what();
               return 0;
         }catch(...){
-              std::cout << "error desconocido";
+              std::cerr << "error desconocido";
+              return 0;
         }
 }

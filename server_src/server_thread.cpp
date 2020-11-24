@@ -15,6 +15,9 @@ Thread::Thread(Thread&& thread) {
 }
 
 Thread& Thread::operator=(Thread&& other) {
+    if (this == &other){
+        return *this;
+    }
     this->thread = std::move(other.thread);
     return *this;
 }

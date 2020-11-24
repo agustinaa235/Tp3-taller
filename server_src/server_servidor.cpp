@@ -2,23 +2,21 @@
 #include <iostream>
 
 
-Servidor::Servidor(const std::string& service, const std::string& root_file) :
-    recursos(root_file),
+Servidor::Servidor(const std::string& service,
+                    const std::string& nombre_archivo) :
+    recursos(nombre_archivo),
     service(service.c_str()),
     listener(),
-    aceptador(){}
+    aceptador(listener, recursos){}
 
-Servidor::~Servidor(){
-    delete this->aceptador;
-}
+Servidor::~Servidor(){}
 
 void Servidor::close(){
     this->listener.Shutdown(SHUT_RDWR);
     this->listener.cerrar();
-    this->aceptador->join();
+    this->aceptador.join();
 }
 void Servidor::run(){
     this->listener.bine_and_listen(nullptr, this->service);
-    this->aceptador = new Aceptador(this->listener,this->recursos);
-    this->aceptador->start();
+    this->aceptador.start();
 }

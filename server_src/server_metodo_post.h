@@ -19,9 +19,9 @@ class Post_Con_Recurso: public Metodo {
           * devolvera la respuesta correspondiente
         */
         std::string obtener_respuesta() override;
-        
+
     private:
-        std::string body;
+        std::string cuerpo;
 };
 
 class Post_Sin_Recurso: public Metodo {

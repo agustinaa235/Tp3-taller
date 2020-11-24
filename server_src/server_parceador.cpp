@@ -42,17 +42,17 @@ static std::string buscar_recurso(const std::string& petitorio){
     return recurso;
 }
 /*
-  * buscara en el petitorio el body y lo devulvera. si no lo encuentra
+  * buscara en el petitorio el cuerpo y lo devulvera. si no lo encuentra
   * devulve el string vacio.
 */
-static std::string buscar_body(const std::string& petitorio){
+static std::string buscar_cuerpo(const std::string& petitorio){
     int pos = petitorio.find(BODY);
-    std::string body("");
+    std::string cuerpo("");
     if (pos == -1){
-        return body;
+        return cuerpo;
     }
-    body = petitorio.substr(pos, petitorio.size() -1);
-    return body;
+    cuerpo = petitorio.substr(pos, petitorio.size() -1);
+    return cuerpo;
 }
 /*
   * creara el metodo get y de acuerdo a si posee un recurso devuelve
@@ -61,12 +61,12 @@ static std::string buscar_body(const std::string& petitorio){
 static Metodo* crear_metodo_get(const std::string& petitorio,
                                 Servidor_Recursos& recursos){
     if (no_tiene_recurso(petitorio)){
-        std::string archivo = recursos.get_root_template();
+        std::string archivo = recursos.obtener_nombre_archivo();
         return new Get_Sin_Recurso(archivo);
     }
     std::string recurso = buscar_recurso(petitorio);
-    std::string body = recursos.get_recurso(recurso);
-    return new Get_Con_Recurso(body);
+    std::string cuerpo = recursos.obtener_recurso(recurso);
+    return new Get_Con_Recurso(cuerpo);
 }
 /*
   * creara el metodo post y de acuedo a si posee un recurso devuelve uno o
@@ -78,12 +78,12 @@ static Metodo* crear_metodo_post(const std::string& petitorio,
         return new Post_Sin_Recurso();
     }
     std::string recurso = buscar_recurso(petitorio);
-    std::string body = buscar_body(petitorio);
-    recursos.agregar_recurso(recurso, body);
-    return new Post_Con_Recurso(body);
+    std::string cuerpo = buscar_cuerpo(petitorio);
+    recursos.agregar_recurso(recurso, cuerpo);
+    return new Post_Con_Recurso(cuerpo);
 }
 /*
-  * creara el metodo invalia
+  * creara el metodo invalida
 */
 static Metodo* crear_metodo_invalido(const std::string& petitorio){
     int pos = petitorio.find("/");

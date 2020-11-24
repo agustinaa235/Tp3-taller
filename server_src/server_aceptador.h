@@ -9,10 +9,6 @@
 class Aceptador : public Thread{
     public:
           /*
-            * Creara al aceptador con sus argumentos en cero
-          */
-          Aceptador();
-          /*
             *Creara al aceptador dejandolo valido para uso
           */
           Aceptador(Socket& listener, Servidor_Recursos& recursos);
